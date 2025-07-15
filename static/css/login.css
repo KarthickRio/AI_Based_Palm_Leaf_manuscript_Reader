@@ -1,0 +1,206 @@
+body {
+  overflow: hidden;
+  background-image: url("../img/so-white1.png");
+}
+/* green background */
+.green-background {
+  height: 100%;
+  position: absolute;
+  top: 0px;
+  right: 0;
+}
+/* thiruvalluvar */
+.daddy {
+  position: absolute;
+  right: 0;
+  bottom: -10px;
+}
+
+/* title */
+.leaf {
+  /* margin-left: 127px; */
+  position: absolute;
+  left: 127px;
+  top: 28px;
+}
+.title {
+  display: flex;
+}
+#logo {
+  width: 70px;
+  height: 82px;
+}
+#title-text {
+  margin: 15px;
+  margin-left: 0px;
+  color: #753835;
+  font-size: 32px;
+  font-family: "Moulpali";
+}
+
+#des {
+  word-spacing: 2px;
+  text-align: justify;
+  font-family: "Gafata";
+  position: relative;
+  font-size: 17px;
+  bottom: 45px;
+  margin-top: 29px;
+  margin-left: 10px;
+  margin-bottom: 10px;
+}
+/* form */
+input[type="text"],
+input[type="password"] {
+  color: #000000;
+  margin-bottom: 25px;
+  font-family: "Gafata";
+  font-family: "Gafata";
+  height: 57px;
+  width: 412px;
+  border-radius: 14px;
+  border: none;
+  background-color: #eef7f6;
+  text-indent: 35px;
+  font-size: 20px;
+  outline: none;
+}
+
+#sign-in {
+  cursor: pointer;
+  font-family: "Inter";
+  height: 57px;
+  width: 412px;
+  border-radius: 14px;
+  border: none;
+  color: white;
+  background-color: #0c7d81;
+  font-size: 14px;
+  transition: 0.1s ease-in all;
+}
+#sign-in a {
+  font-size: 14px;
+  color: white;
+  text-decoration: none;
+}
+#sign-in:active {
+  transform: scale(0.9);
+}
+#forget {
+  font-weight: bold;
+  text-align: end;
+  margin-bottom: 25px;
+  font-family: "Inter";
+  color: #35968f;
+}
+#form {
+  /* margin-left: 127px; */
+  position: relative;
+  top: 220px;
+  left: 127px;
+  width: 412px;
+  display: flex;
+  flex-direction: column;
+}
+.si-up {
+  font-family: "Gafata";
+  font-size: 15px;
+  position: absolute;
+  top: 500px;
+  left: 225px;
+}
+.si-up span {
+  color: #157576;
+  text-decoration: underline;
+  font-family: "Inter";
+  font-weight: bold;
+}
+/* line */
+.line {
+  position: absolute;
+  top: 570px;
+  left: 152px;
+}
+/* social media sign in  */
+.social {
+  position: absolute;
+  top: 630px;
+  left: 135px;
+  display: flex;
+  width: 416px;
+  justify-content: space-between;
+}
+
+.google,
+.facebook {
+  border-radius: 12px;
+  cursor: pointer;
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  height: 54px;
+  width: 202px;
+  background-color: #eef7f6;
+}
+.google img,
+.facebook img {
+  height: 35px;
+  width: 35px;
+}
+.google a,
+.facebook a {
+  text-indent: -10px;
+  font-family: "Gafata";
+  font-size: 13px;
+}
+
+/* for mobile */
+@media screen and (max-width: 600px) {
+    body {
+        overflow: hidden;
+    }
+    
+  .leaf {
+    left: 9%;
+    top: 1%;
+  }
+  input[type="text"], input[type="password"]{
+    width: 124%;
+  }
+  #sign-in {
+    width: 124%;
+  }
+  #form {
+    left: 8%;
+    width: 66%;
+  }
+  .green-background{
+    bottom: -2%;
+    left: 83%;
+  }
+  .daddy{
+    display: none;
+  }
+  .si-up{
+    left: 22%;
+  }
+  .line{
+    left: 11%;
+    width: 78%;
+  }
+  .google a,.facebook a{
+    display: none;
+  }
+  .google,.facebook{
+    width: 26%;
+  }
+  .social {
+    position: absolute;
+    top: 85%;
+    left: 0%;
+    display: flex;
+    width: 100%;
+    justify-content: space-evenly;
+}
+
+}

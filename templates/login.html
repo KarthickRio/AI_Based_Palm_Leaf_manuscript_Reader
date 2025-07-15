@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='css/login.css') }}">
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css?family=Moulpali"
+    />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css?family=Gafata"
+    />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css?family=Inter"
+    />
+    <title>Login</title>
+    <style>
+      body {
+        font-family: "Moulpali", serif;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="parent">
+      <!-- green background -->
+      <img class="green-background" src=".././static/img/Vector 3.png" />
+      <!-- thiruvalluvar -->
+      <img
+        class="daddy"
+        src=".././static/img/Thiruvalluvar Wallpapers_Mobile Wallpaper copy 2 1.png"
+      />
+
+      <!-- logo and text -->
+      <div class="leaf">
+        <div class="title">
+          <img id="logo" src=".././static/img/leaves-svgrepo-com 1.png" />
+          <p id="title-text">Palm Leaf Reader</p>
+        </div>
+        <h1 style="margin-left: 10px; margin-top: 0px; font-weight: 100">
+          Welcome !
+        </h1>
+        <p id="des">Get your handwritten scripts digitalized.</p>
+      </div>
+      <!-- form -->
+      <form id="form" method="post" >
+        <input type="text" id="email" placeholder="Email Address" name="email" required />
+        <input type="password" id="password" placeholder="Password" name="password" required />
+        <a id="forget">Forgot Password?</a>
+        <button type="submit" id="sign-in">SIGN IN</button>
+      </form>
+      <!-- sign up -->
+      <div class="si-up">
+        <p>Don't have an account?<span> Sign Up </span></p>
+      </div>
+      <!-- line -->
+      <img class="line" src=".././static/img/Line 3.png" />
+      <!-- social media link -->
+      <div class="social">
+        <!-- google -->
+        <div class="google">
+          <img src=".././static/img/icons8-google-96.png" alt="" />
+          <a>SIGN IN WITH GOOGLE</a>
+        </div>
+        <!-- facebook -->
+        <div class="facebook">
+          <img src=".././static/img/icons8-facebook-48.png" alt="" />
+          <a>SIGN IN WITH FACEBOOK</a>
+        </div>
+      </div>
+    </div>
+  </body>
+<script>
+  {%if log is false%}
+  windows.alert("wrong credentials");
+  {%endif%}
+</script>
+</html>

@@ -1,0 +1,475 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap" rel="stylesheet">
+    <!-- <link
+      rel="stylesheet"
+      href="../static/css/character.css"
+    /> -->
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static',filename='css/character.css') }}"
+    />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css?family=Moulpali"
+    />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css?family=DM Sans"
+    />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css?family=Gafata"
+    />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css?family=Inter"
+    />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css?family=Poppins"
+    />
+    <!-- title icon -->
+    <link rel="icon" href="../static/img/leaves-svgrepo-com 1.png" />
+    <title>Characters</title>
+    <style>
+      body {
+        font-family: "Moulpali", serif;
+      }
+       @media print {
+        .not_to_print {
+          display: none;
+        }
+        .to_print {
+          display: block !important;
+        }
+        #title_print {
+          text-align: center;
+        }
+        #output_image_from_flask2 {
+          width: 100%;
+        }
+        #water {
+          position: absolute;
+          top: 40vh;
+          left: 12vh;
+          font-size: 3em;
+          text-align: center;
+          rotate: -45deg;
+          opacity: 0.3;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- element to show image while clicking -->
+    <div id="image" class="not_to_print">
+      <img id="image_output_view" alt="" />
+      <!-- icon to close the image -->
+      <!-- <i class="fas fa-home"></i> -->
+      <button onclick="closed()" id="close">
+        <span
+          style="
+            text-shadow: 3px 5px 8px #000;
+            font-size: 80px;
+            font-weight: bolder;
+            color: #e74c3c;
+          "
+          >✖</span
+        >
+      </button>
+    </div>
+
+    <div class="parent not_to_print">
+      <!-- nav bar -->
+      <div class="nav">
+        <!-- logo -->
+        <div class="leaf">
+          <div class="title">
+            <img id="logo" src=".././static/img/leaves-svgrepo-com 1.png" />
+            <p id="title-text">Palm Leaf Reader</p>
+          </div>
+        </div>
+        <!-- bit logo -->
+        <img id="bit-logo" src=".././static/img/bitlogo.png " />
+        <!-- links -->
+        <div class="links">
+          <a
+            style="
+              border-bottom: 3px solid #0c7d81;
+              color: #0c7d81;
+              margin-bottom: 5px;
+            "
+            href="#"
+          >
+            Characters
+          </a>
+          <a href="{{url_for('numerals_upload')}}"> Numerals</a>
+          <a href="{{url_for('login')}}"> Log out</a>
+        </div>
+      </div>
+
+      <!-- backgrounds -->
+      <img
+        id="daddy-left"
+        src=".././static/img/thiruvalluvar left.png"
+        alt="thiruvalluvar bg"
+      />
+      <img
+        id="daddy-right"
+        src=".././static/img/thiruvalluvar right.png"
+        alt="thiruvalluvar bg"
+      />
+
+      <!-- upload parent -->
+      <div class="upload-parent">
+         <form
+                action="{{ url_for('characters_upload') }}"
+                id="form"
+                method="post"
+                enctype="multipart/form-data"
+              >
+        <!-- upload -->
+        <label for="file-upload" class="upload" id="drag-drop-label">
+          <img
+            src=".././static/img/upload-svgrepo-com 1.png"
+            alt=""
+            class="icon"
+          />
+          <div id="upload">
+            <span>Drag your files here</span>
+            <span>Or</span>
+            <div class="input">
+
+                <button class="btn">Browse</button>
+                <input
+                  id="file-upload"
+                  type="file"
+                  style="width: 400px"
+                  name="image"
+                />
+
+            </div>
+          </div>
+        </label>
+        <!-- upload description -->
+        <p id="upload-des">
+          Select the Model
+          <select id="model_dropdown" name="model_name">
+          <option value="thirukkural" selected> திருக்குறள் </option>
+          <option value="siddha" {%if selected==2 %} selected="selected"{%endif%}> சித்தமருத்துவம்</option>
+          <option value="uvesa" {%if selected==3 %} selected="selected"{%endif%}> உ.வே.சா</option>
+        </select>
+        </p>
+           </form>
+
+      </div>
+
+      <!-- boxes parent -->
+      <div class="parent-boxes" {%if image%} style="display:flex;" {%else%} style="display: none;"{%endif%}>
+        <!-- preview box  -->
+        <div class="pbox-parent">
+          <p id="preview">
+            {% if file_name%} {{file_name}} {%else%} Uploaded Image {%endif%}
+          </p>
+          <div class="prev-box">
+            <div id="image_parent">
+              {% if image %}
+              <img class="pdf-element"
+                src="data:image/jpeg;base64,{{ image }}"
+                id="input_image_from_flask"
+              />
+              {%else%}
+              <img src="" id="prev-img" />
+              {% endif %}
+            </div>
+          </div>
+        </div>
+        <!-- output box -->
+        <div class="out-box">
+          {%if output_image%}
+          <!-- output image -->
+          <img class="pdf-element"
+            src="data:image/jpeg;base64,{{ output_image }}"
+            id="output_image_from_flask"
+          />
+
+          <!-- download button -->
+          <div class="buttons" id="buttons">
+            <!-- view button -->
+            <a
+              href="#"
+              id="download"
+              ><i class="fa fa-download" id="download_icon"></i
+            ></a>
+            <button onclick="showImage()" id="view_button">
+              <i class="fa fa-eye" id="view_icon"></i>
+            </button>
+          </div>
+          {%endif%}
+        </div>
+      </div>
+      <!-- loading image -->
+      <div class="loading" style="display: none" id="loading2">
+        <img
+          src="../static/img/thiruvalluvar_loading.png"
+          alt=""
+          id="loading"
+        />
+        <p id="loading_text">Transcribing...</p>
+        <!-- <p id="loading_text">Penning...</p> -->
+      </div>
+      <!-- texts -->
+      <div class="text-parent" id="text-parent">
+        {%if char_array%}
+
+        <!-- heading of extracted -->
+        <p id="extracted_title">Extracted text</p>
+        <!-- extracted -->
+        <div class="extracted">
+          {%if char_array%}
+          <ol id="extracted_lines" contenteditable="true" class="pdf-element">
+            {% for char in char_array %}
+            <li>{{char}}</li>
+            {%endfor%}
+          </ol>
+          {%endif%}
+        </div>
+        <div class="vline">
+          <div class="dot"></div>
+          <div class="line"></div>
+          <div class="dot"></div>
+        </div>
+        <p id="changed_title">Modified text</p>
+        <div class="changed">
+          <ol id="changed_lines" contenteditable="true" class="pdf-element">
+            {% for char in changed_text %}
+            <li>{{char}}</li>
+            {%endfor%}
+          </ol>
+        </div>
+        {%endif%}
+      </div>
+<!--      {%if tanglish%}-->
+<!--          <div >-->
+<!--          <ol id="tanglish_line" >-->
+<!--            {% for line in tanglish %}-->
+<!--            <li>{{line}}</li>-->
+<!--            {%endfor%}-->
+<!--          </ol>-->
+<!--        </div>-->
+<!--      {%endif%}-->
+    </div>
+   <!-- to print -->
+    <div class="to_print" style="display: none">
+      <h1 id="title_print">Palm Leaf Reader</h1>
+      <h3>{% if file_name%} {{file_name}} {%endif%}</h3>
+      <h1 id="water">BIT - Palm Leaf Reader</h1>
+      {%if output_image%}
+      <img
+        src="data:image/jpeg;base64,{{ output_image }}"
+        id="output_image_from_flask2"
+      />
+      {%endif%}
+
+      <h3>Predicted Text</h3>
+      <div class="extracted_lines2">
+        <ol id="extracted_lines2" contenteditable="true">
+          {% for char in char_array %} {%if char%}
+          <li>{{char}}</li>
+          {%endif%} {%endfor%}
+        </ol>
+      </div>
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+
+      <h3>Modified Text</h3>
+      <div class="changed_lines2">
+        <ol id="changed_lines2" contenteditable="true">
+          {% for char in changed_text %} {%if char%}
+          <li>{{char}}</li>
+          {%endif%} {%endfor%}
+        </ol>
+      </div>
+    </div>
+  </body>
+  <script>
+    // code for on every time uploading
+
+    const input = document.getElementById("file-upload");
+    const form = document.getElementById("form");
+    const text_parent = document.getElementById("text-parent");
+    const loading = document.getElementById("loading2");
+    const image_input = document.getElementById("prev-img");
+    const img_big = document.getElementById("image");
+    const previous_input_img=document.getElementById("input_image_from_flask");
+    const buttons = document.getElementById("buttons");
+    const parent_boxes = document.querySelector(".parent-boxes");
+    const loading_text = document.getElementById("loading_text");
+    input.onchange = function () {
+      // preview text
+      // var last = this.value.split("\\").pop(); // "C:\fakepath\3.png" converting this value to "3.png"
+      // document.getElementById("preview").innerHTML = last;
+      // preview image
+      loading_text.style.maxWidth="7em";
+      loading.style.display = "block";
+      text_parent.style.display = "none";
+      const file = input.files[0];
+      if(image_input){
+        parent_boxes.style.display="flex";
+        image_input.src = URL.createObjectURL(file);
+      }
+      else{
+        previous_input_img.src = URL.createObjectURL(file); //changing the first box image
+        output_image_from_flask.src="";//removing the first box image
+        img_big.style.display="none";//removing the big image
+        buttons.style.display="none";//removing the buttons
+      }
+
+   
+      form.submit();
+    };
+    //function to show image while click view
+    function showImage() {
+      var close = document.getElementById("close");
+      var img_parent = document.getElementById("image");
+      img_parent.style.display = "block";
+      close.style.display = "block";
+      var image = document.getElementById("output_image_from_flask");
+      var prev = document.getElementById("image_output_view");
+      prev.src = image.src;
+    }
+    //function to close the image
+    function closed() {
+      var close = document.getElementById("close");
+      var img_parent = document.getElementById("image");
+      img_parent.style.display = "none";
+      close.style.display = "none";
+    }
+
+    // extracted lines and changed lines content
+    const extracted_line = document.getElementById("extracted_lines");
+    const changed_line = document.getElementById("changed_lines");
+  </script>
+
+ <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
+    <script src="https://rawgit.com/eKoopmans/html2pdf/master/dist/html2pdf.bundle.js"></script>
+       <!-- Your script to generate and download the PDF -->
+    <script>
+         document.getElementById('download').addEventListener('click', function () {
+            // Select all elements with class 'pdf-element'
+        var elements = document.querySelectorAll('.pdf-element');
+
+        // Create a new div to contain all the elements
+        var container = document.createElement('div');
+
+        // Append each element to the container
+        var titles = ['Input Image','Output Image' ,'Extracted Text' , 'Modified Text']
+         var title = document.createElement('h1');
+         title.style.textAlign = "center";
+          title.textContent = "Transcribed for Image - "+document.getElementById('preview').innerHTML;
+          // Append the title element before the cloned element
+          container.appendChild(title);
+        elements.forEach(function (element,index) {
+
+              // Log the ID of the current element
+              console.log(element.id);
+
+              // Clone the element to avoid moving it from its original place
+              var clonedElement = element.cloneNode(true);
+
+              // Check if the element has the specified ID
+              if (element.id === 'output_image_from_flask') { // to reduce the second elements width
+                  // Resize the element as needed
+                  clonedElement.style.width = '100%'; // Adjust the width as needed
+                  clonedElement.style.height = 'auto'; // Maintain aspect ratio
+              }
+              // If the cloned element is a list, adjust styles for better alignment
+             if (clonedElement.tagName.toLowerCase() === 'ul' || clonedElement.tagName.toLowerCase() === 'ol') {
+            // Apply styles to the list items
+            var listItems = clonedElement.querySelectorAll('li');
+            listItems.forEach(function (li,index) {
+                li.style.listStyle = 'none'; // Remove default list-style
+                li.style.paddingLeft = '20px'; // Adjust padding or margin as needed
+                let li_content = li.innerHTML;
+                let new_li_content = "";
+                for (let i = 0; i < li_content.length; i++) {
+                    console.log(li_content[i]);
+
+                    // Corrected condition to check for different characters
+                    if (li_content[i] == 'ை' || li_content[i] == 'ே' || li_content[i] == 'ெ' || li_content[i] =='ு'
+                    || li_content[i] =='ி' || li_content[i] == 'ீ' || li_content[i] =='ூ' || li_content[i] == 'ா')
+                    {  //useful for alignment
+                        new_li_content += "<span style='margin-left:1px;'>" + li_content[i] + "</span>";
+                        console.log(new_li_content);
+                    } else {
+                        new_li_content += li_content[i];
+                    }
+
+                }
+                li.innerHTML="<b>"+(index+1)+".</b>"+new_li_content;
+                // Add other styling adjustments as necessary
+            });
+        }
+
+
+                 // Create a title element
+                var titleElement = document.createElement('h2');
+                titleElement.textContent = titles[index];
+
+
+
+                // Append the title element before the cloned element
+                container.appendChild(titleElement);
+              // Append the cloned element to the container
+              container.appendChild(clonedElement);
+});
+         var endCard = document.createElement('h2');
+        endCard.textContent = '-'.repeat(20) + " End Of File " + '-'.repeat(20) ;
+        endCard.style.paddingLeft = '60px';
+        endCard.style.marginTop = '60px';
+         container.appendChild(endCard);
+        // Debugging: Log the container to the console
+        console.log("container:", container);
+
+
+       // Generate PDF with enhanced options for Tamil font handling
+    html2pdf(container, {
+        margin: 10,
+        filename: 'output.pdf',
+        jsPDF: {
+            unit: 'mm',
+            format: 'a4',
+            orientation: 'portrait',
+            // Enable font embedding and text extraction
+            embedFonts: true,
+            enableTextExtraction: true
+        },
+        html2canvas: {
+            scale: 2,
+            // Enable letter rendering for improved character accuracy
+            letterRendering: 1
+        },
+        useCORS: true,
+        // Explicitly set encoding to UTF-8
+        encoding: 'utf-8'
+    });
+    });
+    </script>
+
+</html>
